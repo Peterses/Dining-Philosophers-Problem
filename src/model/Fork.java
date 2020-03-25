@@ -1,41 +1,47 @@
-package Model;
+package model;
 
+import javafx.scene.control.TextArea;
 import java.util.concurrent.Semaphore;
 
 public class Fork {
 
     private int ID;
     private String owner;
-
-    public Semaphore fork = new Semaphore(1);
-
+    private TextArea textArea;
+    private Semaphore fork = new Semaphore(1);
+    
     public Fork(int ID) {
         this.ID = ID;
         this.owner = "";
     }
 
-    public void take() {
+    void take() {
         try {
 
             fork.acquire();
-
-            System.out.println(Thread.currentThread().getName() + " is TAKING fork");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void release() {
+    void release() {
         try {
 
             fork.release();
 
-            System.out.println(Thread.currentThread().getName() + " is PUTTING DOWN fork");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public TextArea getTextArea() {
+        return textArea;
+    }
+
+    public void setTextArea(TextArea textArea) {
+        this.textArea = textArea;
     }
 
     public int getID() {
